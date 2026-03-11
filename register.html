@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Structural Network Engine</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            width: 420px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            padding: 34px 30px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            text-align: center;
+            font-size: 28px;
+            color: #1d2a3a;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #5b6675;
+            margin-bottom: 26px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #223042;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 15px;
+            border: 1px solid #d7deea;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2b7cff;
+            box-shadow: 0 0 0 3px rgba(43, 124, 255, 0.12);
+        }
+
+        button {
+            width: 100%;
+            padding: 13px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #2b7cff;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background: #1f5fd1;
+        }
+
+        #status {
+            margin-top: 16px;
+            min-height: 24px;
+            font-size: 14px;
+            color: #374151;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .footer {
+            margin-top: 22px;
+            text-align: center;
+            font-size: 14px;
+            color: #5b6675;
+        }
+
+        .footer a {
+            color: #2b7cff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 18px;
+            font-size: 13px;
+            color: #7b8794;
+            letter-spacing: 0.3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <div class="brand">STRUCTURAL NETWORK ENGINE</div>
+
+        <h1>Create Account</h1>
+
+        <div class="subtitle">
+            Register to upload datasets, run analyses, store results,
+            and generate shareable structural network links.
+        </div>
+
+        <div class="field">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Choose a username">
+        </div>
+
+        <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Choose a password">
+        </div>
+
+        <div class="field">
+            <label for="password2">Confirm Password</label>
+            <input type="password" id="password2" placeholder="Repeat password">
+        </div>
+
+        <button onclick="register()">Create Account</button>
+
+        <div id="status"></div>
+
+        <div class="footer">
+            Already have an account?
+            <a href="/login">Login</a>
+        </div>
+
+    </div>
+
+    <script>
+
+        async function register() {
+
+            const statusBox = document.getElementById("status");
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+            const password2 = document.getElementById("password2").value;
+
+            if (!username || !password) {
+                statusBox.innerText = "Please fill all fields.";
+                return;
+            }
+
+            if (password !== password2) {
+                statusBox.innerText = "Passwords do not match.";
+                return;
+            }
+
+            statusBox.innerText = "Creating account...";
+
+            try {
+
+                const response = await fetch("/api/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    statusBox.innerText = data.detail || "Registration failed.";
+                    return;
+                }
+
+                statusBox.innerText = "Account created. Redirecting...";
+                window.location.href = "/";
+
+            } catch (error) {
+
+                statusBox.innerText = "Network error during registration.";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

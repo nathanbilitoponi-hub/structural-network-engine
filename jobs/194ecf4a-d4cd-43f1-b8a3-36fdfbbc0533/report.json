@@ -1,0 +1,31 @@
+{
+  "job_id": "194ecf4a-d4cd-43f1-b8a3-36fdfbbc0533",
+  "user_id": 1,
+  "created_at": "2026-03-09T23:15:31.748054Z",
+  "input_file": "sdss_galaxies.csv",
+  "result": "Structural network extraction completed successfully.",
+  "metrics": {
+    "file": "sdss_galaxies.csv",
+    "rows": 50001,
+    "columns": 3,
+    "valid_points": 50000,
+    "network_sample": 220,
+    "size_bytes": 2883505,
+    "bbox_x_min": 0.013,
+    "bbox_x_max": 359.995,
+    "bbox_y_min": -29.999,
+    "bbox_y_max": 29.999,
+    "bbox_z_min": 0.01,
+    "bbox_z_max": 0.1,
+    "mean_center_distance": 93.133,
+    "density": 25.7231513,
+    "mean_nearest_neighbor": 5.342,
+    "threshold": 12.82,
+    "edges": 498,
+    "mean_degree": 4.527,
+    "max_degree": 11,
+    "components": 16,
+    "backbone_nodes": 103,
+    "backbone_fraction": 0.468
+  }
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "job_id": "81ce8620-5696-4b0d-925f-0509826d141c",
+    "created_at": "2026-03-09T22:21:06.064082Z",
+    "input_file": "sdss_galaxies.csv"
+  },
+  {
+    "job_id": "082361a1-b3a8-43ee-935a-5f5c0b92d43a",
+    "created_at": "2026-03-09T22:14:45.268540Z",
+    "input_file": "sdss_galaxies.csv"
+  }
+]

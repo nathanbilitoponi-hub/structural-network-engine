@@ -1,0 +1,36 @@
+STRUCTURAL NETWORK ENGINE REPORT
+================================
+
+Result: Structural network extraction completed successfully.
+
+METRICS
+-------
+File: 5e44d419-701e-44f4-949e-5c559441de33_sdss_galaxies.csv
+Rows: 50001
+Columns: 3
+Valid Points: 50000
+Network Sample: 220
+File Size (bytes): 2883505
+Bounding Box X: 0.013 -> 359.995
+Bounding Box Y: -29.999 -> 29.999
+Bounding Box Z: 0.01 -> 0.1
+Mean Center Distance: 93.133
+Estimated Density: 25.7231513
+Mean Nearest Neighbor: 5.342
+Threshold: 12.82
+Edges: 498
+Mean Degree: 4.527
+Max Degree: 11
+Connected Components: 16
+Backbone Nodes: 103
+Backbone Fraction: 0.468
+
+EXPORTS
+-------
+Nodes exported: 220
+Edges exported: 498
+
+NOTES
+-----
+Nodes CSV contains: id, backbone, degree
+Edges CSV contains: source, target, distance

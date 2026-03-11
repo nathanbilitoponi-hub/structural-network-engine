@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Structural Network Engine</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .container {
+            background: white;
+            width: 1120px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #444;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background: #2b7cff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #1f5fd1;
+        }
+
+        .small-button {
+            margin-top: 0;
+            padding: 8px 14px;
+            font-size: 14px;
+        }
+
+        .share-button {
+            background: #18a957;
+        }
+
+        .share-button:hover {
+            background: #128847;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.5;
+            min-height: 30px;
+        }
+
+        .box {
+            margin-top: 25px;
+            background: #f8f9fb;
+            border: 1px solid #dfe3ea;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .box-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #jobBox {
+            display: none;
+            text-align: left;
+        }
+
+        .job-row {
+            margin: 8px 0;
+            font-size: 15px;
+            word-break: break-word;
+        }
+
+        .job-label {
+            font-weight: bold;
+        }
+
+        .share-link-box {
+            margin-top: 12px;
+            padding: 12px;
+            background: white;
+            border: 1px solid #dfe3ea;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #333;
+            word-break: break-all;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dfe3ea;
+            padding: 10px;
+        }
+
+        th {
+            background: #eef3fb;
+            text-align: left;
+        }
+
+        #resultsBox {
+            text-align: left;
+        }
+
+        #downloadsBox {
+            display: none;
+            text-align: center;
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .download-link {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #18a957;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .download-link:hover {
+            background: #128847;
+        }
+
+        #graphBox {
+            text-align: center;
+        }
+
+        #graph {
+            background: white;
+            border: 1px solid #dfe3ea;
+            border-radius: 6px;
+        }
+
+        #historyTable .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footer-note {
+            margin-top: 18px;
+            font-size: 13px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Structural Network Engine</h1>
+
+        <p class="description">
+            Upload your spatial dataset and run structural network extraction automatically.
+            Each analysis is stored as a persistent job with a public shareable link.
+        </p>
+
+        <input type="file" id="file">
+        <br>
+        <button onclick="runAlgorithm()">Run Algorithm</button>
+
+        <div id="status">No analysis run yet.</div>
+
+        <div id="jobBox" class="box">
+            <div class="box-title">Analysis Job</div>
+            <div class="job-row"><span class="job-label">Analysis ID:</span> <span id="jobIdValue">-</span></div>
+            <div class="job-row"><span class="job-label">Created At:</span> <span id="createdAtValue">-</span></div>
+            <div class="job-row"><span class="job-label">Input File:</span> <span id="inputFileValue">-</span></div>
+            <div class="job-row"><span class="job-label">Public Link:</span> <span id="publicLinkValue">-</span></div>
+            <div class="share-link-box" id="shareLinkBox">No public link yet.</div>
+        </div>
+
+        <div id="resultsBox" class="box">
+            <div class="box-title">Analysis Results</div>
+            <table>
+                <tbody id="resultsTableBody">
+                    <tr>
+                        <th>Status</th>
+                        <td>No results yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="downloadsBox" class="box">
+            <div class="box-title">Download Results</div>
+            <div class="download-buttons">
+                <a id="downloadNodes" class="download-link" href="#" download>Download Nodes CSV</a>
+                <a id="downloadEdges" class="download-link" href="#" download>Download Edges CSV</a>
+                <a id="downloadReport" class="download-link" href="#" download>Download Report JSON</a>
+            </div>
+        </div>
+
+        <div id="graphBox" class="box">
+            <div class="box-title">Structural Network Graph</div>
+            <svg id="graph" width="620" height="420"></svg>
+        </div>
+
+        <div id="historyBox" class="box">
+            <div class="box-title">Recent Analyses</div>
+            <table id="historyTable">
+                <thead>
+                    <tr>
+                        <th>Analysis ID</th>
+                        <th>Date</th>
+                        <th>Input File</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                    <tr>
+                        <td colspan="4">No recent analyses yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer-note">
+            Hosted service prototype — proprietary implementation
+        </div>
+
+    </div>
+
+    <script>
+        let currentSimulation = null;
+        let currentAnalysisUrl = null;
+
+        async function runAlgorithm() {
+            const fileInput = document.getElementById("file");
+            const statusBox = document.getElementById("status");
+
+            if (fileInput.files.length === 0) {
+                statusBox.innerText = "Please select a file first.";
+                return;
+            }
+
+            hideJobInfo();
+            hideDownloads();
+            statusBox.innerText = "Uploading dataset and running Structural Network Engine...";
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            try {
+                const response = await fetch("/run", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    statusBox.innerText = data.error || "Server error during analysis.";
+                    return;
+                }
+
+                renderJob(data);
+                renderResultState(data);
+                history.replaceState({}, "", data.analysis_url || "/");
+                await loadRecentJobs();
+
+            } catch (error) {
+                statusBox.innerText = "Error while contacting the server.";
+            }
+        }
+
+        async function openJob(jobId) {
+            const statusBox = document.getElementById("status");
+            statusBox.innerText = "Loading saved analysis...";
+
+            try {
+                const response = await fetch(`/job/${jobId}`);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    statusBox.innerText = data.detail || "Unable to load job.";
+                    return;
+                }
+
+                renderJob(data);
+                renderResultState(data);
+                history.replaceState({}, "", data.analysis_url || `/analysis/${jobId}`);
+
+            } catch (error) {
+                statusBox.innerText = "Error while loading saved analysis.";
+            }
+        }
+
+        async function loadAnalysisFromUrl() {
+            const path = window.location.pathname;
+            const prefix = "/analysis/";
+
+            if (!path.startsWith(prefix)) {
+                return;
+            }
+
+            const jobId = path.substring(prefix.length).trim();
+            if (!jobId) {
+                return;
+            }
+
+            const statusBox = document.getElementById("status");
+            statusBox.innerText = "Loading shared analysis...";
+
+            try {
+                const response = await fetch(`/job/${jobId}`);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    statusBox.innerText = data.detail || "Analysis not found.";
+                    return;
+                }
+
+                renderJob(data);
+                renderResultState(data);
+
+            } catch (error) {
+                statusBox.innerText = "Error while loading shared analysis.";
+            }
+        }
+
+        function renderResultState(data) {
+            const statusBox = document.getElementById("status");
+            statusBox.innerText = data.result || "Analysis completed.";
+
+            if (data.metrics) {
+                renderMetricsTable(data.metrics);
+            }
+
+            if (data.nodes && data.links) {
+                drawGraph(data.nodes, data.links);
+            }
+
+            if (data.downloads) {
+                setupDownloads(data.downloads);
+            }
+        }
+
+        function renderJob(data) {
+            const jobBox = document.getElementById("jobBox");
+            const publicUrl = buildAbsoluteAnalysisUrl(data.analysis_url || `/analysis/${data.job_id}`);
+
+            currentAnalysisUrl = publicUrl;
+
+            document.getElementById("jobIdValue").innerText = data.job_id || "-";
+            document.getElementById("createdAtValue").innerText = data.created_at || "-";
+            document.getElementById("inputFileValue").innerText = data.input_file || "-";
+            document.getElementById("publicLinkValue").innerText = publicUrl;
+            document.getElementById("shareLinkBox").innerText = publicUrl;
+
+            jobBox.style.display = "block";
+        }
+
+        function buildAbsoluteAnalysisUrl(path) {
+            return `${window.location.origin}${path}`;
+        }
+
+        async function copyAnalysisLink(jobId) {
+            const shareUrl = buildAbsoluteAnalysisUrl(`/analysis/${jobId}`);
+
+            try {
+                await navigator.clipboard.writeText(shareUrl);
+                document.getElementById("status").innerText = "Analysis link copied to clipboard.";
+            } catch (error) {
+                document.getElementById("status").innerText = `Copy this link: ${shareUrl}`;
+            }
+        }
+
+        function hideJobInfo() {
+            document.getElementById("jobBox").style.display = "none";
+        }
+
+        function hideDownloads() {
+            document.getElementById("downloadsBox").style.display = "none";
+        }
+
+        function renderMetricsTable(metrics) {
+            const tbody = document.getElementById("resultsTableBody");
+            tbody.innerHTML = "";
+
+            const rows = [
+                ["File", metrics.file],
+                ["Rows", metrics.rows],
+                ["Columns", metrics.columns],
+                ["Valid Points", metrics.valid_points],
+                ["Network Sample", metrics.network_sample],
+                ["File Size (bytes)", metrics.size_bytes],
+                ["Bounding Box X", `${metrics.bbox_x_min} → ${metrics.bbox_x_max}`],
+                ["Bounding Box Y", `${metrics.bbox_y_min} → ${metrics.bbox_y_max}`],
+                ["Bounding Box Z", `${metrics.bbox_z_min} → ${metrics.bbox_z_max}`],
+                ["Mean Center Distance", metrics.mean_center_distance],
+                ["Estimated Density", metrics.density],
+                ["Mean Nearest Neighbor", metrics.mean_nearest_neighbor],
+                ["Threshold", metrics.threshold],
+                ["Edges", metrics.edges],
+                ["Mean Degree", metrics.mean_degree],
+                ["Max Degree", metrics.max_degree],
+                ["Connected Components", metrics.components],
+                ["Backbone Nodes", metrics.backbone_nodes],
+                ["Backbone Fraction", metrics.backbone_fraction]
+            ];
+
+            for (const row of rows) {
+                const tr = document.createElement("tr");
+
+                const th = document.createElement("th");
+                th.innerText = row[0];
+
+                const td = document.createElement("td");
+                td.innerText = row[1];
+
+                tr.appendChild(th);
+                tr.appendChild(td);
+                tbody.appendChild(tr);
+            }
+        }
+
+        function setupDownloads(downloads) {
+            document.getElementById("downloadNodes").href = downloads.nodes;
+            document.getElementById("downloadEdges").href = downloads.edges;
+            document.getElementById("downloadReport").href = downloads.report;
+            document.getElementById("downloadsBox").style.display = "block";
+        }
+
+        async function loadRecentJobs() {
+            try {
+                const response = await fetch("/jobs");
+                const data = await response.json();
+
+                if (!response.ok) {
+                    renderHistoryError("Unable to load recent analyses.");
+                    return;
+                }
+
+                renderHistoryTable(data.jobs || []);
+            } catch (error) {
+                renderHistoryError("Unable to load recent analyses.");
+            }
+        }
+
+        function renderHistoryError(message) {
+            const tbody = document.getElementById("historyTableBody");
+            tbody.innerHTML = `<tr><td colspan="4">${message}</td></tr>`;
+        }
+
+        function renderHistoryTable(jobs) {
+            const tbody = document.getElementById("historyTableBody");
+            tbody.innerHTML = "";
+
+            if (!jobs || jobs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4">No recent analyses yet.</td></tr>`;
+                return;
+            }
+
+            for (const job of jobs) {
+                const tr = document.createElement("tr");
+
+                const tdId = document.createElement("td");
+                tdId.innerText = job.job_id || "-";
+
+                const tdDate = document.createElement("td");
+                tdDate.innerText = job.created_at || "-";
+
+                const tdInput = document.createElement("td");
+                tdInput.innerText = job.input_file || "-";
+
+                const tdAction = document.createElement("td");
+                const actions = document.createElement("div");
+                actions.className = "action-buttons";
+
+                const openButton = document.createElement("button");
+                openButton.className = "small-button";
+                openButton.innerText = "Open Results";
+                openButton.onclick = () => openJob(job.job_id);
+
+                const shareButton = document.createElement("button");
+                shareButton.className = "small-button share-button";
+                shareButton.innerText = "Share";
+                shareButton.onclick = () => copyAnalysisLink(job.job_id);
+
+                actions.appendChild(openButton);
+                actions.appendChild(shareButton);
+                tdAction.appendChild(actions);
+
+                tr.appendChild(tdId);
+                tr.appendChild(tdDate);
+                tr.appendChild(tdInput);
+                tr.appendChild(tdAction);
+
+                tbody.appendChild(tr);
+            }
+        }
+
+        function drawGraph(nodes, links) {
+            const svg = d3.select("#graph");
+            svg.selectAll("*").remove();
+
+            const width = 620;
+            const height = 420;
+
+            if (currentSimulation) {
+                currentSimulation.stop();
+            }
+
+            currentSimulation = d3.forceSimulation(nodes)
+                .force("link", d3.forceLink(links).id(d => d.id).distance(35))
+                .force("charge", d3.forceManyBody().strength(-80))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collision", d3.forceCollide().radius(8))
+                .alpha(1)
+                .alphaDecay(0.03);
+
+            const link = svg.append("g")
+                .selectAll("line")
+                .data(links)
+                .enter()
+                .append("line")
+                .attr("stroke", "#999")
+                .attr("stroke-opacity", 0.7)
+                .attr("stroke-width", 1.2);
+
+            const node = svg.append("g")
+                .selectAll("circle")
+                .data(nodes)
+                .enter()
+                .append("circle")
+                .attr("r", d => d.backbone ? 6 : 4)
+                .attr("fill", d => d.backbone ? "#ff6b35" : "#2b7cff")
+                .style("cursor", "grab")
+                .on("click", function (event, d) {
+                    d.fx = null;
+                    d.fy = null;
+                    currentSimulation.alpha(0.7).restart();
+                })
+                .call(
+                    d3.drag()
+                        .on("start", dragStarted)
+                        .on("drag", dragged)
+                        .on("end", dragEnded)
+                );
+
+            node.append("title")
+                .text(d => {
+                    const label = d.backbone ? "Backbone node" : "Node";
+                    return `${label} ${d.id} | degree: ${d.degree}`;
+                });
+
+            currentSimulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+
+                node
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+            });
+
+            currentSimulation.restart();
+
+            function dragStarted(event, d) {
+                if (!event.active) currentSimulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+
+            function dragEnded(event, d) {
+                if (!event.active) currentSimulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+                currentSimulation.alpha(0.5).restart();
+            }
+        }
+
+        loadRecentJobs();
+        loadAnalysisFromUrl();
+    </script>
+
+</body>
+
+</html>
+<hr>
+
+<a href="/terms">Terms of Service</a> |
+<a href="/privacy">Privacy Policy</a> |
+<a href="/refund">Refund Policy</a>
