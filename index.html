@@ -10,552 +10,546 @@
         body {
             font-family: Arial, sans-serif;
             background: #f5f5f5;
-            text-align: center;
-            margin-top: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .topbar {
+            background: #1d2a3a;
+            color: white;
+            padding: 14px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .userbox,
+        .creditbox {
+            font-size: 14px;
+        }
+
+        .credit-value {
+            font-weight: bold;
+        }
+
+        .buy-btn {
+            background: #18a957;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .buy-btn:hover {
+            background: #128847;
+        }
+
+        .logout {
+            background: #ff4c4c;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
         .container {
-            background: white;
-            width: 1120px;
+            width: 1100px;
             margin: auto;
-            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .box {
+            background: white;
             border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        .description {
-            color: #444;
-            line-height: 1.5;
-            margin-bottom: 20px;
+        .title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
 
         button {
-            padding: 12px 25px;
-            font-size: 16px;
+            padding: 10px 18px;
             background: #2b7cff;
-            color: white;
             border: none;
+            color: white;
             border-radius: 6px;
             cursor: pointer;
-            margin-top: 15px;
         }
 
         button:hover {
             background: #1f5fd1;
         }
 
-        .small-button {
-            margin-top: 0;
-            padding: 8px 14px;
-            font-size: 14px;
-        }
-
-        .share-button {
-            background: #18a957;
-        }
-
-        .share-button:hover {
-            background: #128847;
-        }
-
-        #status {
-            margin-top: 20px;
-            font-size: 18px;
-            line-height: 1.5;
-            min-height: 30px;
-        }
-
-        .box {
-            margin-top: 25px;
-            background: #f8f9fb;
-            border: 1px solid #dfe3ea;
-            border-radius: 8px;
-            padding: 20px;
-        }
-
-        .box-title {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        #jobBox {
-            display: none;
-            text-align: left;
-        }
-
-        .job-row {
-            margin: 8px 0;
-            font-size: 15px;
-            word-break: break-word;
-        }
-
-        .job-label {
-            font-weight: bold;
-        }
-
-        .share-link-box {
-            margin-top: 12px;
-            padding: 12px;
-            background: white;
-            border: 1px solid #dfe3ea;
-            border-radius: 6px;
-            font-size: 14px;
-            color: #333;
-            word-break: break-all;
+        button:disabled {
+            background: #9aa7bd;
+            cursor: not-allowed;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 15px;
         }
 
         th,
         td {
-            border: 1px solid #dfe3ea;
+            border: 1px solid #e3e6ee;
             padding: 10px;
         }
 
         th {
-            background: #eef3fb;
+            background: #f2f5fb;
             text-align: left;
         }
 
-        #resultsBox {
-            text-align: left;
+        .smallbtn {
+            padding: 6px 12px;
+            font-size: 13px;
+            margin-right: 8px;
         }
 
-        #downloadsBox {
-            display: none;
-            text-align: center;
-        }
-
-        .download-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        .download-link {
-            display: inline-block;
-            padding: 12px 20px;
+        .share {
             background: #18a957;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: bold;
         }
 
-        .download-link:hover {
+        .share:hover {
             background: #128847;
         }
 
-        #graphBox {
-            text-align: center;
-        }
-
-        #graph {
+        svg {
             background: white;
-            border: 1px solid #dfe3ea;
-            border-radius: 6px;
+            border: 1px solid #ddd;
         }
 
-        #historyTable .action-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+        #status,
+        #purchaseStatus {
+            margin-top: 14px;
+            min-height: 22px;
+            line-height: 1.4;
         }
 
-        .footer-note {
-            margin-top: 18px;
-            font-size: 13px;
+        .warning {
+            color: #c0392b;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .muted {
             color: #666;
+        }
+
+        .download-links a {
+            display: inline-block;
+            margin-right: 16px;
+            margin-bottom: 8px;
+            color: #2b7cff;
+            text-decoration: none;
+        }
+
+        .download-links a:hover {
+            text-decoration: underline;
+        }
+
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .package-card {
+            border: 1px solid #dfe3ea;
+            border-radius: 8px;
+            padding: 16px;
+            background: #fafbfd;
+        }
+
+        .package-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .package-price {
+            font-size: 16px;
+            margin-bottom: 12px;
         }
     </style>
 </head>
 
 <body>
 
+    <div class="topbar">
+        <div class="brand">Structural Network Engine</div>
+
+        <div class="topbar-right">
+            <div class="userbox">
+                User: <span id="usernameLabel"></span>
+            </div>
+
+            <div class="creditbox">
+                Credits remaining:
+                <span id="creditsLabel" class="credit-value">0</span>
+            </div>
+
+            <button class="buy-btn" onclick="toggleBuyCredits()">Buy Credits</button>
+            <button class="logout" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
     <div class="container">
 
-        <h1>Structural Network Engine</h1>
+        <div class="box" id="buyCreditsBox" style="display:none;">
+            <div class="title">Buy Credits</div>
 
-        <p class="description">
-            Upload your spatial dataset and run structural network extraction automatically.
-            Each analysis is stored as a persistent job with a public shareable link.
-        </p>
+            <div class="package-grid">
+                <div class="package-card">
+                    <div class="package-name">10 credits</div>
+                    <div class="package-price">10€</div>
+                    <button onclick="buyCredits('pack_10')">Buy 10 credits</button>
+                </div>
 
-        <input type="file" id="file">
-        <br>
-        <button onclick="runAlgorithm()">Run Algorithm</button>
+                <div class="package-card">
+                    <div class="package-name">50 credits</div>
+                    <div class="package-price">40€</div>
+                    <button onclick="buyCredits('pack_50')">Buy 50 credits</button>
+                </div>
 
-        <div id="status">No analysis run yet.</div>
+                <div class="package-card">
+                    <div class="package-name">100 credits</div>
+                    <div class="package-price">70€</div>
+                    <button onclick="buyCredits('pack_100')">Buy 100 credits</button>
+                </div>
+            </div>
 
-        <div id="jobBox" class="box">
-            <div class="box-title">Analysis Job</div>
-            <div class="job-row"><span class="job-label">Analysis ID:</span> <span id="jobIdValue">-</span></div>
-            <div class="job-row"><span class="job-label">Created At:</span> <span id="createdAtValue">-</span></div>
-            <div class="job-row"><span class="job-label">Input File:</span> <span id="inputFileValue">-</span></div>
-            <div class="job-row"><span class="job-label">Public Link:</span> <span id="publicLinkValue">-</span></div>
-            <div class="share-link-box" id="shareLinkBox">No public link yet.</div>
+            <div id="purchaseStatus" class="muted"></div>
         </div>
 
-        <div id="resultsBox" class="box">
-            <div class="box-title">Analysis Results</div>
+        <div class="box">
+            <div class="title">Run Analysis</div>
+
+            <input type="file" id="file">
+            <br><br>
+
+            <button id="runButton" onclick="runAnalysis()">Run Algorithm</button>
+
+            <div id="creditWarning" class="warning" style="display:none;">
+                No credits remaining. You cannot run a new analysis.
+            </div>
+
+            <div id="status" class="muted"></div>
+        </div>
+
+        <div class="box" id="jobBox" style="display:none">
+            <div class="title">Analysis</div>
+
+            <div><b>ID:</b> <span id="jobId"></span></div>
+            <div><b>Date:</b> <span id="jobDate"></span></div>
+            <div><b>Input:</b> <span id="jobInput"></span></div>
+            <div><b>Share Link:</b> <span id="jobLink"></span></div>
+        </div>
+
+        <div class="box">
+            <div class="title">Results</div>
+
             <table>
-                <tbody id="resultsTableBody">
+                <tbody id="resultsTable">
                     <tr>
                         <th>Status</th>
-                        <td>No results yet.</td>
+                        <td>No analysis yet</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div id="downloadsBox" class="box">
-            <div class="box-title">Download Results</div>
-            <div class="download-buttons">
-                <a id="downloadNodes" class="download-link" href="#" download>Download Nodes CSV</a>
-                <a id="downloadEdges" class="download-link" href="#" download>Download Edges CSV</a>
-                <a id="downloadReport" class="download-link" href="#" download>Download Report JSON</a>
+        <div class="box">
+            <div class="title">Download</div>
+            <div class="download-links">
+                <a id="downloadNodes" href="#" target="_blank">Nodes CSV</a>
+                <a id="downloadEdges" href="#" target="_blank">Edges CSV</a>
+                <a id="downloadReport" href="#" target="_blank">Report JSON</a>
             </div>
         </div>
 
-        <div id="graphBox" class="box">
-            <div class="box-title">Structural Network Graph</div>
-            <svg id="graph" width="620" height="420"></svg>
+        <div class="box">
+            <div class="title">Network Graph</div>
+            <svg id="graph" width="600" height="400"></svg>
         </div>
 
-        <div id="historyBox" class="box">
-            <div class="box-title">Recent Analyses</div>
-            <table id="historyTable">
+        <div class="box">
+            <div class="title">Recent Analyses</div>
+
+            <table>
                 <thead>
                     <tr>
-                        <th>Analysis ID</th>
+                        <th>ID</th>
                         <th>Date</th>
-                        <th>Input File</th>
+                        <th>Input</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="historyTableBody">
+
+                <tbody id="jobsTable">
                     <tr>
-                        <td colspan="4">No recent analyses yet.</td>
+                        <td colspan="4">No jobs</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-
-        <div class="footer-note">
-            Hosted service prototype — proprietary implementation
         </div>
 
     </div>
 
     <script>
-        let currentSimulation = null;
-        let currentAnalysisUrl = null;
+        let simulation = null;
+        let currentCredits = 0;
 
-        async function runAlgorithm() {
-            const fileInput = document.getElementById("file");
-            const statusBox = document.getElementById("status");
+        async function checkUser() {
+            const res = await fetch("/api/me");
+            const data = await res.json();
 
-            if (fileInput.files.length === 0) {
-                statusBox.innerText = "Please select a file first.";
+            if (!data.authenticated) {
+                window.location = "/login";
                 return;
             }
 
-            hideJobInfo();
-            hideDownloads();
-            statusBox.innerText = "Uploading dataset and running Structural Network Engine...";
+            document.getElementById("usernameLabel").innerText = data.user.username;
+            updateCreditsUI(data.user.credits);
+        }
 
-            const formData = new FormData();
-            formData.append("file", fileInput.files[0]);
+        function updateCreditsUI(credits) {
+            currentCredits = Number(credits || 0);
+            document.getElementById("creditsLabel").innerText = currentCredits;
+
+            const runButton = document.getElementById("runButton");
+            const creditWarning = document.getElementById("creditWarning");
+
+            if (currentCredits <= 0) {
+                runButton.disabled = true;
+                creditWarning.style.display = "block";
+            } else {
+                runButton.disabled = false;
+                creditWarning.style.display = "none";
+            }
+        }
+
+        function toggleBuyCredits() {
+            const box = document.getElementById("buyCreditsBox");
+            box.style.display = box.style.display === "none" ? "block" : "none";
+        }
+
+        async function buyCredits(packageCode) {
+            const status = document.getElementById("purchaseStatus");
+            status.innerText = "Creating Stripe Checkout session...";
 
             try {
-                const response = await fetch("/run", {
+                const res = await fetch("/api/create-checkout-session", {
                     method: "POST",
-                    body: formData
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        package_code: packageCode
+                    })
                 });
 
-                const data = await response.json();
+                const data = await res.json();
 
-                if (!response.ok) {
-                    statusBox.innerText = data.error || "Server error during analysis.";
+                if (!res.ok) {
+                    status.innerText = data.detail || "Unable to create checkout session.";
                     return;
                 }
 
-                renderJob(data);
-                renderResultState(data);
-                history.replaceState({}, "", data.analysis_url || "/");
-                await loadRecentJobs();
-
-            } catch (error) {
-                statusBox.innerText = "Error while contacting the server.";
-            }
-        }
-
-        async function openJob(jobId) {
-            const statusBox = document.getElementById("status");
-            statusBox.innerText = "Loading saved analysis...";
-
-            try {
-                const response = await fetch(`/job/${jobId}`);
-                const data = await response.json();
-
-                if (!response.ok) {
-                    statusBox.innerText = data.detail || "Unable to load job.";
+                if (!data.checkout_url) {
+                    status.innerText = "Stripe checkout URL not received.";
                     return;
                 }
 
-                renderJob(data);
-                renderResultState(data);
-                history.replaceState({}, "", data.analysis_url || `/analysis/${jobId}`);
-
-            } catch (error) {
-                statusBox.innerText = "Error while loading saved analysis.";
+                window.location.href = data.checkout_url;
+            } catch (e) {
+                status.innerText = "Network error while creating checkout session.";
             }
         }
 
-        async function loadAnalysisFromUrl() {
-            const path = window.location.pathname;
-            const prefix = "/analysis/";
+        async function logout() {
+            await fetch("/api/logout", { method: "POST" });
+            window.location = "/login";
+        }
 
-            if (!path.startsWith(prefix)) {
+        async function runAnalysis() {
+            const file = document.getElementById("file").files[0];
+            const status = document.getElementById("status");
+
+            if (currentCredits <= 0) {
+                status.innerText = "No credits remaining. You cannot run a new analysis.";
+                updateCreditsUI(0);
                 return;
             }
 
-            const jobId = path.substring(prefix.length).trim();
-            if (!jobId) {
+            if (!file) {
+                alert("Select file first");
                 return;
             }
 
-            const statusBox = document.getElementById("status");
-            statusBox.innerText = "Loading shared analysis...";
+            status.innerText = "Running analysis...";
 
-            try {
-                const response = await fetch(`/job/${jobId}`);
-                const data = await response.json();
+            const form = new FormData();
+            form.append("file", file);
 
-                if (!response.ok) {
-                    statusBox.innerText = data.detail || "Analysis not found.";
-                    return;
+            const res = await fetch("/run", {
+                method: "POST",
+                body: form
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                status.innerText = data.detail || data.error || "Analysis failed.";
+                if (res.status === 403) {
+                    updateCreditsUI(0);
                 }
+                return;
+            }
 
-                renderJob(data);
-                renderResultState(data);
+            renderJob(data);
+            renderResults(data);
+            drawGraph(data.nodes, data.links);
+            loadJobs();
 
-            } catch (error) {
-                statusBox.innerText = "Error while loading shared analysis.";
+            if (typeof data.remaining_credits !== "undefined") {
+                updateCreditsUI(data.remaining_credits);
+            } else {
+                await refreshCredits();
+            }
+
+            status.innerText = "Analysis completed successfully.";
+        }
+
+        async function refreshCredits() {
+            const res = await fetch("/api/me");
+            const data = await res.json();
+
+            if (data.authenticated) {
+                updateCreditsUI(data.user.credits);
             }
         }
 
-        function renderResultState(data) {
-            const statusBox = document.getElementById("status");
-            statusBox.innerText = data.result || "Analysis completed.";
+        async function handleCheckoutReturn() {
+            const params = new URLSearchParams(window.location.search);
+            const checkout = params.get("checkout");
+            const purchaseStatus = document.getElementById("purchaseStatus");
 
-            if (data.metrics) {
-                renderMetricsTable(data.metrics);
+            if (!checkout) {
+                return;
             }
 
-            if (data.nodes && data.links) {
-                drawGraph(data.nodes, data.links);
+            document.getElementById("buyCreditsBox").style.display = "block";
+
+            if (checkout === "cancel") {
+                purchaseStatus.innerText = "Payment canceled.";
+                window.history.replaceState({}, document.title, "/");
+                return;
             }
 
-            if (data.downloads) {
-                setupDownloads(data.downloads);
+            if (checkout === "success") {
+                purchaseStatus.innerText = "Payment completed. Updating credits...";
+
+                for (let i = 0; i < 6; i++) {
+                    await refreshCredits();
+                    await new Promise(resolve => setTimeout(resolve, 1200));
+                }
+
+                purchaseStatus.innerText = "Credits updated.";
+                window.history.replaceState({}, document.title, "/");
             }
         }
 
         function renderJob(data) {
-            const jobBox = document.getElementById("jobBox");
-            const publicUrl = buildAbsoluteAnalysisUrl(data.analysis_url || `/analysis/${data.job_id}`);
+            document.getElementById("jobBox").style.display = "block";
 
-            currentAnalysisUrl = publicUrl;
+            document.getElementById("jobId").innerText = data.job_id;
+            document.getElementById("jobDate").innerText = data.created_at;
+            document.getElementById("jobInput").innerText = data.input_file;
 
-            document.getElementById("jobIdValue").innerText = data.job_id || "-";
-            document.getElementById("createdAtValue").innerText = data.created_at || "-";
-            document.getElementById("inputFileValue").innerText = data.input_file || "-";
-            document.getElementById("publicLinkValue").innerText = publicUrl;
-            document.getElementById("shareLinkBox").innerText = publicUrl;
+            const url = location.origin + "/analysis/" + data.job_id;
+            document.getElementById("jobLink").innerText = url;
 
-            jobBox.style.display = "block";
+            document.getElementById("downloadNodes").href = data.downloads.nodes;
+            document.getElementById("downloadEdges").href = data.downloads.edges;
+            document.getElementById("downloadReport").href = data.downloads.report;
         }
 
-        function buildAbsoluteAnalysisUrl(path) {
-            return `${window.location.origin}${path}`;
-        }
-
-        async function copyAnalysisLink(jobId) {
-            const shareUrl = buildAbsoluteAnalysisUrl(`/analysis/${jobId}`);
-
-            try {
-                await navigator.clipboard.writeText(shareUrl);
-                document.getElementById("status").innerText = "Analysis link copied to clipboard.";
-            } catch (error) {
-                document.getElementById("status").innerText = `Copy this link: ${shareUrl}`;
-            }
-        }
-
-        function hideJobInfo() {
-            document.getElementById("jobBox").style.display = "none";
-        }
-
-        function hideDownloads() {
-            document.getElementById("downloadsBox").style.display = "none";
-        }
-
-        function renderMetricsTable(metrics) {
-            const tbody = document.getElementById("resultsTableBody");
-            tbody.innerHTML = "";
+        function renderResults(data) {
+            const m = data.metrics;
 
             const rows = [
-                ["File", metrics.file],
-                ["Rows", metrics.rows],
-                ["Columns", metrics.columns],
-                ["Valid Points", metrics.valid_points],
-                ["Network Sample", metrics.network_sample],
-                ["File Size (bytes)", metrics.size_bytes],
-                ["Bounding Box X", `${metrics.bbox_x_min} → ${metrics.bbox_x_max}`],
-                ["Bounding Box Y", `${metrics.bbox_y_min} → ${metrics.bbox_y_max}`],
-                ["Bounding Box Z", `${metrics.bbox_z_min} → ${metrics.bbox_z_max}`],
-                ["Mean Center Distance", metrics.mean_center_distance],
-                ["Estimated Density", metrics.density],
-                ["Mean Nearest Neighbor", metrics.mean_nearest_neighbor],
-                ["Threshold", metrics.threshold],
-                ["Edges", metrics.edges],
-                ["Mean Degree", metrics.mean_degree],
-                ["Max Degree", metrics.max_degree],
-                ["Connected Components", metrics.components],
-                ["Backbone Nodes", metrics.backbone_nodes],
-                ["Backbone Fraction", metrics.backbone_fraction]
+                ["File", m.file],
+                ["Rows", m.rows],
+                ["Columns", m.columns],
+                ["Valid Points", m.valid_points],
+                ["Network Sample", m.network_sample],
+                ["Edges", m.edges],
+                ["Mean Degree", m.mean_degree],
+                ["Max Degree", m.max_degree],
+                ["Components", m.components],
+                ["Backbone Nodes", m.backbone_nodes]
             ];
 
-            for (const row of rows) {
+            const tbody = document.getElementById("resultsTable");
+            tbody.innerHTML = "";
+
+            rows.forEach(r => {
                 const tr = document.createElement("tr");
 
                 const th = document.createElement("th");
-                th.innerText = row[0];
+                th.innerText = r[0];
 
                 const td = document.createElement("td");
-                td.innerText = row[1];
+                td.innerText = r[1];
 
                 tr.appendChild(th);
                 tr.appendChild(td);
                 tbody.appendChild(tr);
-            }
-        }
-
-        function setupDownloads(downloads) {
-            document.getElementById("downloadNodes").href = downloads.nodes;
-            document.getElementById("downloadEdges").href = downloads.edges;
-            document.getElementById("downloadReport").href = downloads.report;
-            document.getElementById("downloadsBox").style.display = "block";
-        }
-
-        async function loadRecentJobs() {
-            try {
-                const response = await fetch("/jobs");
-                const data = await response.json();
-
-                if (!response.ok) {
-                    renderHistoryError("Unable to load recent analyses.");
-                    return;
-                }
-
-                renderHistoryTable(data.jobs || []);
-            } catch (error) {
-                renderHistoryError("Unable to load recent analyses.");
-            }
-        }
-
-        function renderHistoryError(message) {
-            const tbody = document.getElementById("historyTableBody");
-            tbody.innerHTML = `<tr><td colspan="4">${message}</td></tr>`;
-        }
-
-        function renderHistoryTable(jobs) {
-            const tbody = document.getElementById("historyTableBody");
-            tbody.innerHTML = "";
-
-            if (!jobs || jobs.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4">No recent analyses yet.</td></tr>`;
-                return;
-            }
-
-            for (const job of jobs) {
-                const tr = document.createElement("tr");
-
-                const tdId = document.createElement("td");
-                tdId.innerText = job.job_id || "-";
-
-                const tdDate = document.createElement("td");
-                tdDate.innerText = job.created_at || "-";
-
-                const tdInput = document.createElement("td");
-                tdInput.innerText = job.input_file || "-";
-
-                const tdAction = document.createElement("td");
-                const actions = document.createElement("div");
-                actions.className = "action-buttons";
-
-                const openButton = document.createElement("button");
-                openButton.className = "small-button";
-                openButton.innerText = "Open Results";
-                openButton.onclick = () => openJob(job.job_id);
-
-                const shareButton = document.createElement("button");
-                shareButton.className = "small-button share-button";
-                shareButton.innerText = "Share";
-                shareButton.onclick = () => copyAnalysisLink(job.job_id);
-
-                actions.appendChild(openButton);
-                actions.appendChild(shareButton);
-                tdAction.appendChild(actions);
-
-                tr.appendChild(tdId);
-                tr.appendChild(tdDate);
-                tr.appendChild(tdInput);
-                tr.appendChild(tdAction);
-
-                tbody.appendChild(tr);
-            }
+            });
         }
 
         function drawGraph(nodes, links) {
             const svg = d3.select("#graph");
             svg.selectAll("*").remove();
 
-            const width = 620;
-            const height = 420;
+            if (simulation) simulation.stop();
 
-            if (currentSimulation) {
-                currentSimulation.stop();
-            }
-
-            currentSimulation = d3.forceSimulation(nodes)
-                .force("link", d3.forceLink(links).id(d => d.id).distance(35))
-                .force("charge", d3.forceManyBody().strength(-80))
-                .force("center", d3.forceCenter(width / 2, height / 2))
-                .force("collision", d3.forceCollide().radius(8))
-                .alpha(1)
-                .alphaDecay(0.03);
+            simulation = d3.forceSimulation(nodes)
+                .force("link", d3.forceLink(links).id(d => d.id).distance(40))
+                .force("charge", d3.forceManyBody().strength(-90))
+                .force("center", d3.forceCenter(300, 200));
 
             const link = svg.append("g")
                 .selectAll("line")
                 .data(links)
                 .enter()
                 .append("line")
-                .attr("stroke", "#999")
-                .attr("stroke-opacity", 0.7)
-                .attr("stroke-width", 1.2);
+                .attr("stroke", "#aaa");
 
             const node = svg.append("g")
                 .selectAll("circle")
@@ -563,27 +557,9 @@
                 .enter()
                 .append("circle")
                 .attr("r", d => d.backbone ? 6 : 4)
-                .attr("fill", d => d.backbone ? "#ff6b35" : "#2b7cff")
-                .style("cursor", "grab")
-                .on("click", function (event, d) {
-                    d.fx = null;
-                    d.fy = null;
-                    currentSimulation.alpha(0.7).restart();
-                })
-                .call(
-                    d3.drag()
-                        .on("start", dragStarted)
-                        .on("drag", dragged)
-                        .on("end", dragEnded)
-                );
+                .attr("fill", d => d.backbone ? "#ff6b35" : "#2b7cff");
 
-            node.append("title")
-                .text(d => {
-                    const label = d.backbone ? "Backbone node" : "Node";
-                    return `${label} ${d.id} | degree: ${d.degree}`;
-                });
-
-            currentSimulation.on("tick", () => {
+            simulation.on("tick", () => {
                 link
                     .attr("x1", d => d.source.x)
                     .attr("y1", d => d.source.y)
@@ -594,36 +570,94 @@
                     .attr("cx", d => d.x)
                     .attr("cy", d => d.y);
             });
+        }
 
-            currentSimulation.restart();
+        async function loadJobs() {
+            const res = await fetch("/jobs");
+            const data = await res.json();
 
-            function dragStarted(event, d) {
-                if (!event.active) currentSimulation.alphaTarget(0.3).restart();
-                d.fx = d.x;
-                d.fy = d.y;
+            const tbody = document.getElementById("jobsTable");
+            tbody.innerHTML = "";
+
+            if (!data.jobs || data.jobs.length === 0) {
+                const tr = document.createElement("tr");
+                const td = document.createElement("td");
+                td.colSpan = 4;
+                td.innerText = "No jobs";
+                tr.appendChild(td);
+                tbody.appendChild(tr);
+                return;
             }
 
-            function dragged(event, d) {
-                d.fx = event.x;
-                d.fy = event.y;
+            data.jobs.forEach(j => {
+                const tr = document.createElement("tr");
+
+                const id = document.createElement("td");
+                id.innerText = j.job_id;
+
+                const date = document.createElement("td");
+                date.innerText = j.created_at;
+
+                const input = document.createElement("td");
+                input.innerText = j.input_file;
+
+                const act = document.createElement("td");
+
+                const open = document.createElement("button");
+                open.innerText = "Open";
+                open.className = "smallbtn";
+                open.onclick = () => loadJob(j.job_id);
+
+                const share = document.createElement("button");
+                share.innerText = "Share";
+                share.className = "smallbtn share";
+                share.onclick = async () => {
+                    const url = location.origin + "/analysis/" + j.job_id;
+                    try {
+                        await navigator.clipboard.writeText(url);
+                        alert("Link copied");
+                    } catch (e) {
+                        alert(url);
+                    }
+                };
+
+                act.appendChild(open);
+                act.appendChild(share);
+
+                tr.appendChild(id);
+                tr.appendChild(date);
+                tr.appendChild(input);
+                tr.appendChild(act);
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function loadJob(id) {
+            const res = await fetch("/job/" + id);
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(data.detail || "Unable to load job.");
+                return;
             }
 
-            function dragEnded(event, d) {
-                if (!event.active) currentSimulation.alphaTarget(0);
-                d.fx = null;
-                d.fy = null;
-                currentSimulation.alpha(0.5).restart();
+            renderJob(data);
+            renderResults(data);
+            drawGraph(data.nodes, data.links);
+
+            if (typeof data.remaining_credits !== "undefined") {
+                updateCreditsUI(data.remaining_credits);
+            } else {
+                await refreshCredits();
             }
         }
 
-        loadRecentJobs();
-        loadAnalysisFromUrl();
+        checkUser();
+        loadJobs();
+        handleCheckoutReturn();
     </script>
 
-<hr>
-<a href="/terms">Terms of Service</a> |
-<a href="/privacy">Privacy Policy</a> |
-<a href="/refund">Refund Policy</a>
-
 </body>
+
 </html>
