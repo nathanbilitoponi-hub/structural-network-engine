@@ -534,43 +534,64 @@
         }
 
         function drawGraph(nodes, links) {
-            const svg = d3.select("#graph");
-            svg.selectAll("*").remove();
+    const svg = d3.select("#graph");
+    svg.selectAll("*").remove();
 
-            if (simulation) simulation.stop();
+    const width = 600;
+    const height = 400;
+    const margin = 20;
 
-            simulation = d3.forceSimulation(nodes)
-                .force("link", d3.forceLink(links).id(d => d.id).distance(40))
-                .force("charge", d3.forceManyBody().strength(-90))
-                .force("center", d3.forceCenter(300, 200));
+    if (!nodes || nodes.length === 0) {
+        return;
+    }
 
-            const link = svg.append("g")
-                .selectAll("line")
-                .data(links)
-                .enter()
-                .append("line")
-                .attr("stroke", "#aaa");
+    const xs = nodes.map(n => Number(n.x));
+    const ys = nodes.map(n => Number(n.y));
 
-            const node = svg.append("g")
-                .selectAll("circle")
-                .data(nodes)
-                .enter()
-                .append("circle")
-                .attr("r", d => d.backbone ? 6 : 4)
-                .attr("fill", d => d.backbone ? "#ff6b35" : "#2b7cff");
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
 
-            simulation.on("tick", () => {
-                link
-                    .attr("x1", d => d.source.x)
-                    .attr("y1", d => d.source.y)
-                    .attr("x2", d => d.target.x)
-                    .attr("y2", d => d.target.y);
+    const xScale = d3.scaleLinear()
+        .domain([minX, maxX])
+        .range([margin, width - margin]);
 
-                node
-                    .attr("cx", d => d.x)
-                    .attr("cy", d => d.y);
-            });
-        }
+    const yScale = d3.scaleLinear()
+        .domain([minY, maxY])
+        .range([height - margin, margin]);
+
+    const nodeMap = new Map();
+    nodes.forEach(n => {
+        nodeMap.set(Number(n.id), n);
+    });
+
+    const validLinks = links.filter(l =>
+        nodeMap.has(Number(l.source)) && nodeMap.has(Number(l.target))
+    );
+
+    svg.append("g")
+        .selectAll("line")
+        .data(validLinks)
+        .enter()
+        .append("line")
+        .attr("x1", d => xScale(nodeMap.get(Number(d.source)).x))
+        .attr("y1", d => yScale(nodeMap.get(Number(d.source)).y))
+        .attr("x2", d => xScale(nodeMap.get(Number(d.target)).x))
+        .attr("y2", d => yScale(nodeMap.get(Number(d.target)).y))
+        .attr("stroke", "#999")
+        .attr("stroke-width", 1);
+
+    svg.append("g")
+        .selectAll("circle")
+        .data(nodes)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xScale(Number(d.x)))
+        .attr("cy", d => yScale(Number(d.y)))
+        .attr("r", d => d.backbone ? 4 : 3)
+        .attr("fill", d => d.backbone ? "#ff6b35" : "#2b7cff");
+}
 
         async function loadJobs() {
             const res = await fetch("/jobs");
