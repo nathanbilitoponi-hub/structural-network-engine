@@ -1,23 +1,31 @@
+import os
 import numpy as np
 from scipy.spatial import cKDTree
+from scipy.sparse import csr_matrix
+from scipy.sparse.csgraph import connected_components
 
 
 def load_points(csv_path):
     data = np.loadtxt(csv_path, delimiter=",", skiprows=1)
+
+    if data.ndim == 1:
+        data = data.reshape(1, -1)
+
     if data.shape[1] < 3:
-        raise ValueError("CSV must contain at least 3 columns")
-    return data[:, :3]
+        raise ValueError("CSV must contain at least 3 numeric columns")
+
+    points = data[:, :3].astype(float)
+    return points, data.shape[1]
 
 
 def compute_anisotropy_scores(points, k=10):
     tree = cKDTree(points)
-    d, i = tree.query(points, k=min(k+1, len(points)))
+    _, idx = tree.query(points, k=min(k + 1, len(points)))
 
-    scores = np.zeros(len(points))
+    scores = np.zeros(len(points), dtype=float)
 
     for j in range(len(points)):
-
-        nb = i[j, 1:]
+        nb = idx[j, 1:]
         if len(nb) < 3:
             continue
 
@@ -32,91 +40,97 @@ def compute_anisotropy_scores(points, k=10):
     return scores
 
 
-def build_graph(points):
+def build_core_graph(core_points):
+    if len(core_points) < 2:
+        return [], np.zeros(len(core_points), dtype=int), 0
 
-    tree = cKDTree(points)
-    d, i = tree.query(points, k=min(8, len(points)))
+    tree = cKDTree(core_points)
+    d, idx = tree.query(core_points, k=min(8, len(core_points)))
 
-    nn_med = np.median(d[:, 1])
+    if d.shape[1] < 2:
+        return [], np.zeros(len(core_points), dtype=int), len(core_points)
+
+    nn_med = float(np.median(d[:, 1]))
     edge_cut = 1.6 * nn_med
 
     edges = []
-    degree = np.zeros(len(points))
+    degree = np.zeros(len(core_points), dtype=int)
 
-    for a in range(len(points)):
-        for bpos in range(1, i.shape[1]):
+    rows, cols, vals = [], [], []
 
-            b = i[a, bpos]
-            dist = d[a, bpos]
+    for a in range(len(core_points)):
+        for bpos in range(1, idx.shape[1]):
+            b = int(idx[a, bpos])
+            dist = float(d[a, bpos])
 
             if a < b and dist <= edge_cut:
                 edges.append((a, b, dist))
                 degree[a] += 1
                 degree[b] += 1
 
-    return edges, degree
+                rows += [a, b]
+                cols += [b, a]
+                vals += [1, 1]
 
+    if len(core_points) == 0:
+        n_components = 0
+    elif len(rows) == 0:
+        n_components = len(core_points)
+    else:
+        A = csr_matrix((vals, (rows, cols)), shape=(len(core_points), len(core_points)))
+        n_components, _ = connected_components(A, directed=False)
 
-def build_nodes(points, core_mask, degree):
-
-    nodes = []
-
-    for idx in range(len(points)):
-
-        nodes.append({
-            "id": int(idx),
-            "x": float(points[idx, 0]),
-            "y": float(points[idx, 1]),
-            "z": float(points[idx, 2]),
-            "backbone": bool(core_mask[idx]),
-            "degree": int(degree[idx])
-        })
-
-    return nodes
+    return edges, degree, int(n_components)
 
 
 def run_algorithm(csv_path):
+    points, n_columns = load_points(csv_path)
 
-    points = load_points(csv_path)
-
-    scores = compute_anisotropy_scores(points)
-
-    thr = np.quantile(scores, 0.85)
-
+    scores = compute_anisotropy_scores(points, k=10)
+    thr = float(np.quantile(scores, 0.85))
     core_mask = scores >= thr
+    core_points = points[core_mask]
 
-    core = points[core_mask]
+    edges, degree, n_components = build_core_graph(core_points)
 
-    edges, degree = build_graph(points)
+    nodes = []
+    for i in range(len(core_points)):
+        nodes.append({
+            "id": int(i),
+            "x": float(core_points[i, 0]),
+            "y": float(core_points[i, 1]),
+            "z": float(core_points[i, 2]),
+            "backbone": True,
+            "degree": int(degree[i]),
+        })
 
     links = []
-
     for a, b, dist in edges:
         links.append({
             "source": int(a),
             "target": int(b),
-            "distance": float(dist)
+            "distance": float(dist),
         })
 
-    nodes = build_nodes(points, core_mask, degree)
-
-    mean_degree = float(np.mean(degree))
-    max_degree = int(np.max(degree))
+    mean_degree = float(np.mean(degree)) if len(degree) > 0 else 0.0
+    max_degree = int(np.max(degree)) if len(degree) > 0 else 0
 
     metrics = {
+        "file": os.path.basename(csv_path),
         "rows": int(len(points)),
+        "columns": int(n_columns),
         "valid_points": int(len(points)),
-        "network_sample": int(len(core)),
+        "network_sample": int(len(core_points)),
         "edges": int(len(edges)),
-        "mean_degree": mean_degree,
-        "max_degree": max_degree,
-        "components": 1,
-        "backbone_nodes": int(np.sum(core_mask))
+        "mean_degree": round(mean_degree, 4),
+        "max_degree": int(max_degree),
+        "components": int(n_components),
+        "backbone_nodes": int(len(core_points)),
     }
 
     return {
         "result": "Structural network extracted",
         "metrics": metrics,
         "nodes": nodes,
-        "links": links
+        "links": links,
     }
