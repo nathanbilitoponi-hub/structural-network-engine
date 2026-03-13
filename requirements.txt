@@ -1,8 +1,10 @@
+pandas
+numpy
+scipy
 fastapi
 uvicorn
 python-multipart
 stripe
-itsdangerous
 jinja2
-numpy
-scipy
+itsdangerous
+starlette
