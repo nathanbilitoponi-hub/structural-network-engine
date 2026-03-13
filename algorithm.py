@@ -5,24 +5,23 @@ from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import connected_components, shortest_path
 
 
-def load_points(csv_path):
-    data = np.loadtxt(csv_path, delimiter=",", skiprows=1)
+import numpy as np
+import pandas as pd
 
-    if data.ndim == 1:
-        data = data.reshape(1, -1)
 
-    if data.shape[1] < 3:
-        raise ValueError("CSV must contain at least 3 numeric columns")
+def load_point_cloud(file_path):
 
-    points = data[:, :3].astype(float)
+    df = pd.read_csv(file_path)
 
-    mask = np.isfinite(points).all(axis=1)
-    points = points[mask]
+    # tieni solo colonne numeriche
+    numeric_df = df.select_dtypes(include=[np.number])
 
-    if len(points) < 5:
-        raise ValueError("Not enough valid 3D points")
+    if numeric_df.shape[1] < 2:
+        raise ValueError("Dataset must contain at least 2 numeric columns")
 
-    return points, int(data.shape[1])
+    points = numeric_df.values
+
+    return points
 
 
 def anisotropy_scores(points, k):
